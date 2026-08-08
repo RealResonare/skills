@@ -7,6 +7,7 @@
 | 技能 | 目录 | 适用场景 |
 | --- | --- | --- |
 | electricDesign | `electricDesign/` | 模拟与数字电路设计：需求澄清、参数计算、SPICE 网表生成、仿真验证与示意图绘制 |
+| 3dprint | `3dprint/` | 3D 打印建模：通过 MCP 控制 OpenSCAD / Blender 建模、可打印性检查、STL/3MF 导出与切片参数报告 |
 
 ## 安装
 
@@ -73,6 +74,40 @@ python scripts/draw_circuit.py circuit.elements out.png
 ### 使用示例
 
 `examples/示例RC低通.md` 给出一个完整的 RC 低通滤波器设计样例，覆盖从需求澄清到交付的每一步，可作参照。
+
+## 3dprint：3D 打印
+
+面向"生成 / 检查 / 修复 / 准备 3D 打印模型"类任务：AI 通过 MCP 控制 **OpenSCAD** 或 **Blender** 建模，并保证模型真正满足可打印性约束（水密流形、壁厚、悬垂、公差、单位），最终导出 STL / 3MF 并附切片参数报告。不依赖任何特定 MCP 服务器：运行时探测可用工具，无 MCP 时回退本地 CLI。
+
+### 核心流程
+
+**收集打印约束 → 选引擎建模 → 可打印性体检 → 导出 + 切片报告**
+
+- 打印约束默认假设：FDM、0.4mm 喷嘴、PLA、220×220×250mm，并向用户明示假设
+- 引擎路由：OpenSCAD = 参数化/机械件；Blender = 有机曲面/复杂装配；用户指定优先
+- 体检硬性门禁：水密流形、壁厚 ≥ 2×喷嘴（0.8mm）、悬垂 ≤ 45°、最小特征 ≥ 0.4mm、孔位补偿
+- 导出：单件用二进制 STL；多零件装配用 3MF（一文件多 part，内嵌毫米单位）
+- 涉及螺丝/嵌件时，查螺纹参数库选用对应方案与孔径
+
+### 目录结构
+
+```
+3dprint/
+├── SKILL.md            # 技能定义（统一流程、引擎路由、硬性规则、交付契约）
+└── references/
+    ├── printability-checklist.md   # 打印前体检清单：水密性/壁厚/悬垂/公差 + 材料差异表
+    ├── thread-library.md           # 螺纹参数库：ISO 公制螺纹、间隙孔、热熔嵌件、打印螺纹规范
+    ├── multi-part-assembly.md      # 多零件装配与 3MF 导出（lazy-union / Blender 3MF 插件）
+    ├── openscad-workflow.md        # OpenSCAD 引擎：工具映射、代码规范、验证与导出
+    ├── blender-workflow.md         # Blender 引擎：bpy 规范、3D-Print Toolbox 体检、导出
+    └── slicing-params.md           # 切片与导出规范：格式规则、材料温度表、切片参数报告
+```
+
+### 使用示例
+
+- "帮我设计一个 PLA 手机支架，0.4mm 喷嘴" → 走 OpenSCAD 流程，体检后导出 STL
+- "这个 STL 能打印吗？帮我检查" → 跑可打印性清单，逐项报告 PASS/FAIL
+- "做一个带 M3 热熔嵌件、分件上盖的电子壳，导出 3MF" → 螺纹库选嵌件孔位 + 多零件 3MF 导出
 
 ## 新增技能
 
