@@ -16,6 +16,7 @@
 | mechDesign | `mechDesign/` | 机械设计：方案选型、强度/刚度/疲劳/振动校核、DFMA、标准件选型、公差与工程图（GB/ISO 标准） |
 | journal-paper | `journal-paper/` | 期刊论文写作：APS（REVTeX）/ Nature / OSA（Optica）格式要求、模板获取指引、写作规范与投稿打包 |
 | ieee-paper | `ieee-paper/` | IEEE 论文写作：IEEEtran 模板（期刊/会议双模式）、IEEE 格式与数字引用、PDF eXpress 认证与投稿流程 |
+| publisher-templates | `publisher-templates/` | Elsevier/ACM 论文写作：elsarticle/acmart 模板与选项、引用样式、Editorial Manager/TAPS 投稿流程 |
 
 ## 安装
 
@@ -325,6 +326,26 @@ ieee-paper/
 - "写一篇 IEEE Transactions 论文" → journal 模式模板 → 结构 → IEEE 引用 → 四步编译
 - "投 ICASSP 会议" → conference 模式 → PDF eXpress 认证 → EDAS 上传
 - "PDF eXpress 拒收说字体未嵌入" → 官方模板 + pdflatex 重编 + pdffonts 验证
+
+## publisher-templates：Elsevier/ACM 论文写作
+
+面向"写 / 改 / 投 Elsevier 或 ACM 期刊会议论文"类任务。覆盖 elsarticle/cas 与 acmart 文档类选择与选项、引用样式（Elsevier 数字/Harvard、ACM 数字）、Editorial Manager（Elsevier）与 TAPS（ACM）投稿流程——包括导致投稿失败最多的文件结构与分类规则。
+
+### 目录结构
+
+```
+publisher-templates/
+├── SKILL.md            # 技能定义（8 步流程、硬性规则、交付契约）
+└── references/
+    ├── elsevier.md     # elsarticle/cas 文档类选项、frontmatter、三种 .bst、Editorial Manager 提交规则
+    └── acm.md          # acmart 变体、两阶段投稿、TAPS 规则、CCS 分类与 \Description{} 无障碍要求
+```
+
+### 使用示例
+
+- "投一篇 Elsevier 期刊" → `[preprint,12pt]` elsarticle → 扁平化文件 → .bib 标 Manuscript
+- "投 ACM 会议（评审稿）" → `[manuscript,review,anonymous]` 单栏 → 录用后 `[sigconf]` 双栏
+- "TAPS 退回说包不在列表" → 移除 ACM 批准列表外的包
 
 ## 新增技能
 
