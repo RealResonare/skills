@@ -8,6 +8,7 @@
 | --- | --- | --- |
 | electricDesign | `electricDesign/` | 模拟与数字电路设计：需求澄清、参数计算、SPICE 网表生成、仿真验证与示意图绘制 |
 | 3dprint | `3dprint/` | 3D 打印建模：通过 MCP 控制 OpenSCAD / Blender 建模、可打印性检查、STL/3MF 导出与切片参数报告 |
+| embeddedDev | `embeddedDev/` | 嵌入式固件开发：需求澄清、MCU/外设选型、引脚规划、外设驱动、RTOS、通信协议、功耗优化、调试与验证 |
 
 ## 安装
 
@@ -108,6 +109,38 @@ python scripts/draw_circuit.py circuit.elements out.png
 - "帮我设计一个 PLA 手机支架，0.4mm 喷嘴" → 走 OpenSCAD 流程，体检后导出 STL
 - "这个 STL 能打印吗？帮我检查" → 跑可打印性清单，逐项报告 PASS/FAIL
 - "做一个带 M3 热熔嵌件、分件上盖的电子壳，导出 3MF" → 螺纹库选嵌件孔位 + 多零件 3MF 导出
+
+## embeddedDev：嵌入式固件开发
+
+面向"开发 / 编写 / 调试某个单片机固件"类任务，覆盖 MCU（STM32 / ESP32 / AVR / nRF / RP2040 等）固件开发全流程：**需求澄清 → 选型与引脚规划 → 分层编码（HAL/驱动/应用） → 静态检查与构建 → 硬件在环验证 → 交付**。不编造数据手册事实：寄存器/时钟/引脚复用以数据手册或 HAL 为准，无法验证时明确标注"需查数据手册"。
+
+### 核心规则
+
+- ISR 短小无阻塞，只置标志/通知，禁止 printf / malloc
+- 禁止在 ISR 与安全关键路径动态分配；静态分配优先
+- 所有 HAL 调用 / 信号量 / 内存分配的返回值必须检查
+- 使用 `<stdint.h>` 定宽类型；变量使用前初始化；边界检查
+- 看门狗喂狗放在主循环/低优先级任务，绝不放在 ISR
+- 无法真机验证时明确报告 UNVERIFIED，不假装通过
+
+### 目录结构
+
+```
+embeddedDev/
+├── SKILL.md            # 技能定义（统一流程、硬性规则、交付契约）
+└── references/
+    ├── peripheral-drivers.md   # 引脚规划、时钟树、GPIO/UART/I2C/SPI/ADC/PWM/DMA 驱动模式
+    ├── rtos-guide.md           # FreeRTOS/Zephyr/RT-Thread：任务划分、优先级、栈大小、同步原语、看门狗
+    ├── power-optimization.md   # 睡眠模式、时钟门控、唤醒源、电池寿命计算、测量清单
+    ├── debugging.md            # 编译错误、HardFault、JTAG/SWD、printf/semihosting、逻辑分析仪
+    └── coding-standards.md     # MISRA C:2012 要点、BARR-C、防御性编程、代码审查清单
+```
+
+### 使用示例
+
+- "写一个 STM32F103 的 UART + 定时器点灯固件" → 走分层编码流程，编译验证后交付引脚映射表
+- "FreeRTOS 三个任务一个卡死，帮我查" → 栈余量 + 心跳看门狗 + HardFault 定位
+- "ESP32 电池供电，目标待机 1 年" → 功耗设计 + 平均电流/寿命计算
 
 ## 新增技能
 
