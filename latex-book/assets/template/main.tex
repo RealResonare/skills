@@ -1,0 +1,164 @@
+% !TEX program = xelatex
+% ============================================================
+% 中文数学书籍 LaTeX 模板 (book class)
+% 编译方式: xelatex (需要 ctex + 中文字体)
+%   1) xelatex main.tex
+%   2) xelatex main.tex  (第二次生成目录/交叉引用)
+% ============================================================
+\documentclass[10pt,openany]{book}
+\usepackage{ctex} 
+\usepackage{geometry,graphicx,xcolor,color}
+\geometry{
+  a4paper,
+  top=25.4mm, bottom=25.4mm,
+  left=20mm, right=20mm,
+  headheight=2.17cm,
+  headsep=4mm,
+  footskip=12mm
+}
+
+\usepackage{amssymb,amsmath,mathrsfs}                    % 数学字体
+\usepackage{mathpazo}% 采用 Palatino 风格字体
+\usepackage[nofontspec]{newpxtext}
+
+\definecolor{winered}{rgb}{0.5,0,0}
+\definecolor{structurecolor}{RGB}{122,122,142}
+\definecolor{main}{HTML}{3D445F}
+\definecolor{second}{HTML}{627581}
+\definecolor{third}{HTML}{9D8798}
+
+% 定义引用的颜色
+\usepackage{hyperref}
+\hypersetup{colorlinks = true, linktoc=all, linkcolor=black, urlcolor=winered}
+
+% ------------------------------------------------------------%
+% 定义定理环境
+\usepackage{amsthm}
+\newtheoremstyle{defstyle}{3pt}{3pt}{\kaishu}{-3pt}{\bfseries\color{main}}{}{0.5em}{\indent 【\thmname{#1} \thmnumber{#2}】 \thmnote{(#3)}}
+\newtheoremstyle{thmstyle}{3pt}{3pt}{\kaishu}{-3pt}{\bfseries\color{second}}{}{0.5em}{\indent【\thmname{#1} \thmnumber{#2}】 \thmnote{(#3)}}
+\newtheoremstyle{prostyle}{3pt}{3pt}{\kaishu}{-3pt}{\bfseries\color{third}}{}{0.5em}{\indent【\thmname{#1} \thmnumber{#2}】 \thmnote{(#3)}}
+
+\theoremstyle{thmstyle} %theorem style
+  \newtheorem{theorem}{定理}[chapter]
+\theoremstyle{defstyle} % definition style
+  \newtheorem{definition}[theorem]{定义}
+  \newtheorem{lemma}[theorem]{引理}
+  \newtheorem{corollary}[theorem]{推论}
+\theoremstyle{prostyle} % proposition style
+  \newtheorem{proposition}[theorem]{命题}
+  \newtheorem{example}[theorem]{例题}
+  \newtheorem{remark}[theorem]{注}
+
+\renewenvironment{proof}[1][证明]{\par\underline{\textbf{#1.}} \;\fangsong}{\qed\par}
+\newenvironment{solution}{\par\underline{\textbf{解.}} \;\kaishu}{\qed\par}
+\newcommand{\intro}[1]{\rightline{\parbox[t]{5cm}{\footnotesize \fangsong\quad\quad #1 }}}
+% ------------------------------------------------------------%
+% ------------------------------------------------------------%
+% 设置章形式
+\usepackage{titlesec, titletoc}
+\linespread{1.2} 				
+\usepackage{fancyhdr}
+\fancyhf{}
+\renewcommand{\headrule}{\color{structurecolor}\hrule width\textwidth}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1pt}
+\fancypagestyle{plain}{\renewcommand{\headrulewidth}{0pt}\fancyhf{}\renewcommand{\headrule}{}}
+
+\fancyhead[c]{\color{structurecolor}\kaishu\rightmark}
+\fancyfoot[c]{\color{structurecolor}\small\thepage}
+
+\titleformat{\chapter}[display]{\Large}
+{\color{structurecolor}\filleft
+\parbox{1cm}{\vbox to 1.5cm{\vfill\hbox to 4cm{\hfill\Huge \bfseries \color{structurecolor}{Chapter} \thechapter \hfill}}}}
+{1ex}
+{\color{structurecolor} \titlerule[2pt]\large\bfseries \filright \vspace*{1em}}
+[\vspace*{1em} {\titlerule[2pt]}]
+
+\titleformat{\section}[frame]{\normalfont\color{structurecolor}}{\footnotesize \enspace \large \textcolor{structurecolor}{\S \,\thesection}\enspace}{6pt}{\Large\filcenter \bf \kaishu }
+
+
+\titleformat{\subsection}[hang]{\bfseries}{\large\bfseries\color{structurecolor}\thesubsection\enspace}{1pt}{\color{structurecolor}\large\bfseries\filright}
+
+\titleformat{\subsubsection}[hang]{\bfseries}{\large\bfseries\color{structurecolor}\thesubsubsection\enspace}{1pt}{\color{structurecolor}\large\bfseries\filright}
+% ------------------------------------------------------------%
+% 设置封面
+\usepackage{titling}
+\renewcommand*{\maketitle}{
+    \begin{titlepage}
+    \newgeometry{margin = 0in}
+    \parindent=0pt
+    \includegraphics[width=\linewidth]{cover.png} % 封面图片: 请替换为你的封面图 (脚本可生成占位图)
+    \vfill
+    \begin{center}
+        \parbox{0.618\textwidth}{
+        \hfill {\bfseries \Huge \thetitle} \\[0.6pt]  
+        \rule{0.618\textwidth}{4pt} \\ 
+    }
+    \end{center}
+    \vfill
+    \begin{center}
+        \parbox{0.618\textwidth}{
+        \hfill\Large
+        \kaishu 
+          \begin{tabular}{r|}
+          作者：\theauthor \\ 
+          时间：\thedate \\
+        \end{tabular}
+        }
+    \end{center}
+    \vfill
+    \begin{center}
+        \parbox[t]{0.7\textwidth}{\centering \kaishu }
+    \end{center}
+    \vfill
+\end{titlepage}
+\restoregeometry
+\thispagestyle{empty}
+}
+% ------------------------------------------------------------%
+
+% ============================================================
+% >>> 用户替换区: 书名 / 作者 / 日期 <<<
+% ============================================================
+\title{书名}
+\author{作者}
+\date{\today}
+
+\begin{document}
+\frontmatter
+
+\maketitle
+
+\tableofcontents
+
+\mainmatter
+
+% ============================================================
+% >>> 正文从这里开始: 用 \chapter / \section / \subsection 组织 <<<
+% ============================================================
+\chapter{第一章}
+
+\section{第一节}
+
+    \begin{theorem}[此处写定理名称]
+        定理环境。
+    \end{theorem}
+
+    \begin{definition}
+        定义环境。
+    \end{definition}
+
+    \begin{proposition}
+        命题环境。
+    \end{proposition}
+
+    \begin{proof}
+        证明如下：$\cdots$
+    \end{proof}
+
+    \begin{solution}
+        这里写解。
+    \end{solution}
+
+
+\end{document}

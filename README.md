@@ -11,6 +11,7 @@
 | embeddedDev | `embeddedDev/` | 嵌入式固件开发：需求澄清、MCU/外设选型、引脚规划、外设驱动、RTOS、通信协议、功耗优化、调试与验证 |
 | bupt-bachelor-thesis | `bupt-bachelor-thesis/` | 北邮本科毕业论文：基于内置 LaTeX 模板创建/修改/编译毕业论文（含封面、摘要、章节、参考文献） |
 | bupt-beamer-slides | `bupt-beamer-slides/` | 北邮风格 Beamer 幻灯片：论文/报告转 Beamer、课程汇报 PPT，内置 BUPT 主题模板 |
+| latex-book | `latex-book/` | 中文数学书籍 LaTeX 模板：写书/教材/讲义/数学专著，内置定理环境、封面、章节样式 |
 
 ## 安装
 
@@ -193,6 +194,28 @@ bupt-beamer-slides/
 - "把我的报告转成北邮 Beamer" → 初始化项目 → 按"背景/方法/实验/结论"结构转幻灯片 → 编译
 - "北邮风格的 16:9 汇报 PPT" → `\documentclass[aspectratio=169]{beamer}` + BUPT 主题
 - "编译报字体错误" → 安装 Noto CJK/Tinos 字体（见 Template Notes）
+
+## latex-book：中文数学书籍 LaTeX 模板
+
+面向"用 LaTeX 写书 / 教材 / 讲义 / 数学专著"类任务。基于 `book` 文档类，内置：中文支持（ctex）、数学字体与定理环境（定理/定义/引理/推论/命题/例题/注/证明/解）、三色章节样式、封面页与页眉页脚。工作流：**初始化项目 → 改书名/作者 → 按章写正文 → 编译两遍**。
+
+### 目录结构
+
+```
+latex-book/
+├── SKILL.md            # 技能定义（资产清单、标准流程、定理环境速查、常见问题）
+├── scripts/
+│   └── init_book.py    # 初始化脚本：复制模板 + 生成占位封面（可移植，自动定位模板）
+└── assets/template/    # 内置书籍模板
+    ├── main.tex        # 主入口（含"用户替换区"：书名/作者/日期）
+    └── cover.png       # 占位封面（脚本生成，可替换为真实封面）
+```
+
+### 使用示例
+
+- "帮我写一本 LaTeX 教材，书名 XX" → 初始化项目 → 改书名作者 → 按章写正文 → 编译
+- "数学讲义要定理/定义/证明环境" → 模板已预置，直接用 `theorem`/`definition`/`proof` 等环境
+- "编译报缺字体" → 安装 `texlive-xetex` / `texlive-lang-chinese` / `fonts-noto-cjk`
 
 ## 新增技能
 
