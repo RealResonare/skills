@@ -14,6 +14,7 @@
 | latex-book | `latex-book/` | 中文数学书籍 LaTeX 模板：写书/教材/讲义/数学专著，内置定理环境、封面、章节样式 |
 | pcbDesign | `pcbDesign/` | PCB 设计：需求澄清、叠层/阻抗规划、原理图到布局、布线规则、DFM/EMC 检查、制造文件导出（可 MCP 驱动 KiCad） |
 | mechDesign | `mechDesign/` | 机械设计：方案选型、强度/刚度/疲劳/振动校核、DFMA、标准件选型、公差与工程图（GB/ISO 标准） |
+| journal-paper | `journal-paper/` | 期刊论文写作：APS（REVTeX）/ Nature / OSA（Optica）格式要求、模板获取指引、写作规范与投稿打包 |
 
 ## 安装
 
@@ -280,6 +281,28 @@ mechDesign/
 - "设计一个输送带传动，电机 3kW" → 方案对比（齿轮 vs 同步带）→ 效率倒推 → 选型 → 轴校核
 - "校核这根轴的强度和振动" → 扭矩/弯矩/疲劳 + 临界转速 ±20% 检查
 - "评审这个箱体的 DFMA" → 零件数/防呆/过定位/可制造性逐项 PASS/FAIL
+
+## journal-paper：期刊论文写作
+
+面向"写 / 改 / 投 APS、Nature、OSA 期刊论文"类任务。覆盖三大出版方的 LaTeX 论文格式要求、模板获取指引、结构与参考文献规范、编译与投稿打包。**版权说明**：官方模板（REVTeX、sn-jnl.cls、optica-article.cls）为出版社版权材料，本 Skill 不内置版权文件，提供官方/Overleaf 获取指引与格式速查。
+
+### 目录结构
+
+```
+journal-paper/
+├── SKILL.md            # 技能定义（8 步流程、硬性规则、交付契约）
+└── references/
+    ├── aps-revtex.md       # APS：REVTeX 4.2 文档类/期刊选项、结构、引用、编译、提交
+    ├── nature.md           # Nature/Scientific Reports：模板、字数限制表、.bbl 要求、政策
+    ├── osa-optica.md       # OSA/Optica：optica-article、期刊选择、摘要/引用规则、.tar 提交
+    └── writing-common.md   # 跨期刊通用：标题/摘要/图表/公式/引用、Cover letter、LLM 政策
+```
+
+### 使用示例
+
+- "写一篇 PRL 论文" → REVTeX 4.2 模板 → 结构 → 引用 → 四步编译
+- "投 Scientific Reports 要什么格式" → wlscirep 模板、字数限制、.bbl 要求
+- "Optics Express 投稿打包" → optica-article 模板、单一 .tex、.tar 压缩
 
 ## 新增技能
 
