@@ -15,6 +15,7 @@
 | pcbDesign | `pcbDesign/` | PCB 设计：需求澄清、叠层/阻抗规划、原理图到布局、布线规则、DFM/EMC 检查、制造文件导出（可 MCP 驱动 KiCad） |
 | mechDesign | `mechDesign/` | 机械设计：方案选型、强度/刚度/疲劳/振动校核、DFMA、标准件选型、公差与工程图（GB/ISO 标准） |
 | journal-paper | `journal-paper/` | 期刊论文写作：APS（REVTeX）/ Nature / OSA（Optica）格式要求、模板获取指引、写作规范与投稿打包 |
+| ieee-paper | `ieee-paper/` | IEEE 论文写作：IEEEtran 模板（期刊/会议双模式）、IEEE 格式与数字引用、PDF eXpress 认证与投稿流程 |
 
 ## 安装
 
@@ -303,6 +304,27 @@ journal-paper/
 - "写一篇 PRL 论文" → REVTeX 4.2 模板 → 结构 → 引用 → 四步编译
 - "投 Scientific Reports 要什么格式" → wlscirep 模板、字数限制、.bbl 要求
 - "Optics Express 投稿打包" → optica-article 模板、单一 .tex、.tar 压缩
+
+## ieee-paper：IEEE 论文写作
+
+面向"写 / 改 / 投 IEEE 期刊或会议论文"类任务。覆盖 IEEEtran 模板（期刊 Transactions/Letters/Access + 会议双模式）、IEEE 格式规范（双栏 10pt Times、US Letter、数字引用）、PDF eXpress 认证与会议/期刊投稿流程。IEEEtran 为开源宏包（CTAN 发布），本 Skill 提供官方获取路径与符合格式的可编译骨架，正式投稿必须用官方模板。
+
+### 目录结构
+
+```
+ieee-paper/
+├── SKILL.md            # 技能定义（8 步流程、硬性规则、交付契约）
+└── references/
+    ├── ieee-format.md      # IEEEtran 五大模式/文档类选项、期刊vs会议差异表、作者块、摘要/索引词、参考文献
+    ├── submission.md       # PDF eXpress 认证、EDAS/CMT/EasyChair、ScholarOne、eCopyright、投稿清单
+    └── skeleton.md         # 期刊/会议最小骨架（article 类模拟）+ 官方模板替换指引
+```
+
+### 使用示例
+
+- "写一篇 IEEE Transactions 论文" → journal 模式模板 → 结构 → IEEE 引用 → 四步编译
+- "投 ICASSP 会议" → conference 模式 → PDF eXpress 认证 → EDAS 上传
+- "PDF eXpress 拒收说字体未嵌入" → 官方模板 + pdflatex 重编 + pdffonts 验证
 
 ## 新增技能
 
