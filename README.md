@@ -9,6 +9,8 @@
 | electricDesign | `electricDesign/` | 模拟与数字电路设计：需求澄清、参数计算、SPICE 网表生成、仿真验证与示意图绘制 |
 | 3dprint | `3dprint/` | 3D 打印建模：通过 MCP 控制 OpenSCAD / Blender 建模、可打印性检查、STL/3MF 导出与切片参数报告 |
 | embeddedDev | `embeddedDev/` | 嵌入式固件开发：需求澄清、MCU/外设选型、引脚规划、外设驱动、RTOS、通信协议、功耗优化、调试与验证 |
+| bupt-bachelor-thesis | `bupt-bachelor-thesis/` | 北邮本科毕业论文：基于内置 LaTeX 模板创建/修改/编译毕业论文（含封面、摘要、章节、参考文献） |
+| bupt-beamer-slides | `bupt-beamer-slides/` | 北邮风格 Beamer 幻灯片：论文/报告转 Beamer、课程汇报 PPT，内置 BUPT 主题模板 |
 
 ## 安装
 
@@ -141,6 +143,56 @@ embeddedDev/
 - "写一个 STM32F103 的 UART + 定时器点灯固件" → 走分层编码流程，编译验证后交付引脚映射表
 - "FreeRTOS 三个任务一个卡死，帮我查" → 栈余量 + 心跳看门狗 + HardFault 定位
 - "ESP32 电池供电，目标待机 1 年" → 功耗设计 + 平均电流/寿命计算
+
+## bupt-bachelor-thesis：北邮本科毕业论文
+
+面向"写北邮本科毕业论文 / 将内容转为北邮论文 LaTeX 格式"类任务。模板内置于 Skill（无需 clone 远程仓库），工作流：**复制模板 → 填元数据（main.cfg）→ 填摘要关键词（abstract.cfg）→ 替换正文（main.tex）→ 加图/表/代码 → 填参考文献（ref.bib）→ XeLaTeX 编译**。
+
+### 目录结构
+
+```
+bupt-bachelor-thesis/
+├── SKILL.md            # 技能定义（资产清单、标准流程、常见问题修复）
+└── assets/template/    # 内置完整模板
+    ├── main.tex        # 主入口（封面/任务书/摘要/章节/参考文献/附录）
+    ├── main.cfg        # 论文元数据（题目、致谢）
+    ├── abstract.cfg    # 中英文摘要与关键词
+    ├── ref.bib         # BibTeX 参考文献
+    ├── BUPTthesisbachelor.sty / buptbachelor.bst  # 样式与参考文献风格
+    ├── pictures/       # 图
+    ├── docs/           # 封面/任务书/成绩单/声明等行政材料（PDF+Word 源）
+    └── guidebook/      # 使用说明
+```
+
+### 使用示例
+
+- "帮我写北邮毕设论文，题目是 XX" → 复制模板 → 填元数据/摘要 → 按章节写入正文 → 编译
+- "论文编译报错 Times New Roman 缺失" → 换 Tinos 或装微软字体
+- "参考文献全是问号" → 跑完整四步编译序列
+
+## bupt-beamer-slides：北邮风格 Beamer 幻灯片
+
+面向"北邮 Beamer / 论文报告转 PPT / 课程汇报幻灯片"类任务。内置 BUPT 主题（北邮蓝 #3434b4、smoothbars 导航、标题页 logo、编号题注），工作流：**初始化项目 → 编辑 slide.tex → 转换内容为幻灯片结构 → 编译验证**。
+
+### 目录结构
+
+```
+bupt-beamer-slides/
+├── SKILL.md            # 技能定义（资产清单、标准流程、模板说明、验证）
+├── scripts/
+│   └── init_bupt_beamer.py   # 从模板初始化新幻灯片项目（可移植，自动定位模板）
+└── assets/template/    # 内置 BUPT Beamer 模板
+    ├── slide.tex       # 主入口
+    ├── BUPT.sty        # 主题样式
+    ├── ref.bib         # 参考文献
+    └── pic/            # BUPT logo 等
+```
+
+### 使用示例
+
+- "把我的报告转成北邮 Beamer" → 初始化项目 → 按"背景/方法/实验/结论"结构转幻灯片 → 编译
+- "北邮风格的 16:9 汇报 PPT" → `\documentclass[aspectratio=169]{beamer}` + BUPT 主题
+- "编译报字体错误" → 安装 Noto CJK/Tinos 字体（见 Template Notes）
 
 ## 新增技能
 

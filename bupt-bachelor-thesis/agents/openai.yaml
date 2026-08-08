@@ -1,0 +1,4 @@
+interface:
+  display_name: "BUPT Bachelor Thesis"
+  short_description: "Create LaTeX documents from the BUPT bachelor thesis template."
+  default_prompt: "Use the BUPT bachelor thesis template to create or adapt a LaTeX thesis project."

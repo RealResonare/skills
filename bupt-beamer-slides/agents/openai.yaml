@@ -1,0 +1,4 @@
+interface:
+  display_name: "BUPT Beamer Slides"
+  short_description: "Create and compile BUPT-style Beamer presentations."
+  default_prompt: "Create a BUPT Beamer presentation from my report or topic."
