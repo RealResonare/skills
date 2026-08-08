@@ -12,6 +12,7 @@
 | bupt-bachelor-thesis | `bupt-bachelor-thesis/` | 北邮本科毕业论文：基于内置 LaTeX 模板创建/修改/编译毕业论文（含封面、摘要、章节、参考文献） |
 | bupt-beamer-slides | `bupt-beamer-slides/` | 北邮风格 Beamer 幻灯片：论文/报告转 Beamer、课程汇报 PPT，内置 BUPT 主题模板 |
 | latex-book | `latex-book/` | 中文数学书籍 LaTeX 模板：写书/教材/讲义/数学专著，内置定理环境、封面、章节样式 |
+| pcbDesign | `pcbDesign/` | PCB 设计：需求澄清、叠层/阻抗规划、原理图到布局、布线规则、DFM/EMC 检查、制造文件导出（可 MCP 驱动 KiCad） |
 
 ## 安装
 
@@ -216,6 +217,36 @@ latex-book/
 - "帮我写一本 LaTeX 教材，书名 XX" → 初始化项目 → 改书名作者 → 按章写正文 → 编译
 - "数学讲义要定理/定义/证明环境" → 模板已预置，直接用 `theorem`/`definition`/`proof` 等环境
 - "编译报缺字体" → 安装 `texlive-xetex` / `texlive-lang-chinese` / `fonts-noto-cjk`
+
+## pcbDesign：PCB 设计
+
+面向"设计 / 评审 / 检查某个 PCB 板"类任务，覆盖 PCB 设计全流程：**需求澄清 → 叠层与设计规则规划 → 原理图 → 布局 → 布线 → DRC/DFM/EMC 检查 → 制造文件 → 交付**。可通过 MCP 驱动 KiCad（通用适配层，运行时探测工具），无 MCP 时回退 `kicad-cli` 命令行。
+
+### 核心规则
+
+- 不编造数据手册/板厂数值：引脚、封装、叠层 Dk、制程极限以数据手册与厂商能力表为准
+- 导出前必须 DRC：0 error，warning 逐条解释或修复
+- 每个信号层邻接连续参考平面；高速信号禁止跨平面分割
+- 去耦电容就近放置（≤3mm）；平面连接焊盘用热焊盘
+- 无法验证项明确标注 UNVERIFIED，不假装通过
+
+### 目录结构
+
+```
+pcbDesign/
+├── SKILL.md            # 技能定义（统一流程、硬性规则、交付契约）
+└── references/
+    ├── design-rules.md         # 叠层/层数、阻抗目标表、原理图要点、布局布线规则、PDN
+    ├── dfm-checklist.md        # 可制造性清单：线宽/过孔/阻焊/丝印/拼板/铜平衡/装配
+    ├── emc-guidelines.md       # EMC 设计：回流路径、平面分割、滤波、I/O 防护、接地缝合
+    └── manufacturing-export.md # Gerber RS-274X/钻孔/BOM/贴片导出、kicad-cli 命令、下单确认清单
+```
+
+### 使用示例
+
+- "设计一个 ESP32 四层板，带 USB 和传感器" → 叠层/阻抗规划 → 原理图 → 布局布线 → DRC/DFM → 制造文件
+- "帮我评审这块板的 DRC 和 DFM" → 跑 DRC + DFM 清单，逐项 PASS/FAIL 报告
+- "导出 Gerber + BOM + 贴片文件" → kicad-cli 或 MCP 导出，打包交付
 
 ## 新增技能
 
